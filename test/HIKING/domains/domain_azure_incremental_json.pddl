@@ -1,0 +1,30 @@
+(define (domain mydomain)
+    (:requirements :typing :fluents)
+    (:types terrain location action hill waterbody walk climb)
+    (:predicates
+        (has-hill ?t - terrain)
+        (has-waterbody ?t - terrain)
+        (has-goal)
+        (can-walk)
+        (can-climb)
+    )
+    (:functions
+        (steepness ?h - hill)
+        (depth ?w - waterbody)
+    )
+    (:action walk
+        :parameters (?t - terrain ?from - location ?to - location)
+        :precondition (and (has-hill ?t) (can-walk) (at ?from ?t))
+        :effect (and (not (at ?from ?t)) (at ?to ?t))
+    )
+    (:action climb
+        :parameters (?h - hill ?from - location ?to - location)
+        :precondition (and (steepness ?h) (can-climb) (at ?from ?h))
+        :effect (and (not (at ?from ?h)) (at ?to ?h))
+    )
+    (:action swim
+        :parameters (?w - waterbody ?from - location ?to - location)
+        :precondition (and (depth ?w) (can-walk) (at ?from ?w))
+        :effect (and (not (at ?from ?w)) (at ?to ?w))
+    )
+)

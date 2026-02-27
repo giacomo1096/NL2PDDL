@@ -1,0 +1,30 @@
+
+(define (domain mydomain)
+  (:requirements :typing :fluents)
+  (:types vehicle taxi location person)
+
+  (:predicates
+    (is-moving ?v - vehicle)
+    (is-occupied ?t - taxi)
+    (has-taxi ?l - location)
+    (is-in-taxi ?p - person)
+  )
+
+  (:action move-vehicle
+    :parameters (?v - vehicle ?from - location ?to - location)
+    :precondition (and (has-taxi ?from) (is-moving ?v) (not (is-occupied ?v)))
+    :effect (and (not (has-taxi ?from)) (has-taxi ?to))
+  )
+
+  (:action board-person
+    :parameters (?p - person ?t - taxi ?l - location)
+    :precondition (and (is-in-taxi ?p) (has-taxi ?l) (not (is-occupied ?t)))
+    :effect (and (not (is-in-taxi ?p)) (is-occupied ?t))
+  )
+
+  (:action disembark-person
+    :parameters (?p - person ?t - taxi ?l - location)
+    :precondition (and (is-occupied ?t) (has-taxi ?l) (not (is-in-taxi ?p)))
+    :effect (and (is-in-taxi ?p) (not (is-occupied ?t)))
+  )
+)
