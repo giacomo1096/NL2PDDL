@@ -24,7 +24,7 @@ Clone the repository and configure BAML:
 
 ```bash
 
-git clone https://github.com/giadatroilo/NL2PDDL.git
+git clone https://github.com/giacomo1096/NL2PDDL.git
 
 cd NL2PDDL
 
